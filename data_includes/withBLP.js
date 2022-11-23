@@ -1,7 +1,7 @@
 PennController.ResetPrefix(null); // Shorten command names (keep this line here))
 PennController.DebugOff();
 
-var shuffleSequence = seq("consent", "IDentry", "intro", "tech",
+var shuffleSequence = seq("consent", "nameentry", "IDentry", "intro", "tech",
                         "startpractice",
                         sepWith("sep", seq("practice")),
  // putting counter after practice so it won't increment all at the same time when participants show up, as that messes up lists
@@ -26,19 +26,33 @@ var shuffleSequence = seq("consent", "IDentry", "intro", "tech",
                         "completion"
                 );
 
+
+newTrial("nameentry",
+    newVar("partName").global()
+    ,
+    newText("instr2", "full name：").print()
+    ,
+    newHtml("partpage2", "<input type='text' id='partName' name='participant name' min='1' max='120'>").print()
+    ,
+    newButton("clickcontinue", "点此继续").print().wait( 
+        getVar("partName").set( v=>$("#partName").val() ).testNot.is('')
+    )
+)
+.log("partName", getVar("partName"))
+    
 newTrial("IDentry",
     newVar("partID").global()
     ,
     newText("instr", "请输入10位数字代码，此匿名代码将作为您的资料代码：").print()
     ,
-    newHtml("partpage", "<input type='text' id='partID' name='participant ID' min='1' max='120'>").print()
+    newHtml("partpage", "<input type='text' id='partID' name='participant email' min='1' max='120'>").print()
     ,
     newButton("clickcontinue", "点此继续").print().wait( 
         getVar("partID").set( v=>$("#partID").val() ).testNot.is('')
     )
 )
 .log("partID", getVar("partID"))
-
+            
 // This is run at the beginning of each trial
 Header(
     // Declare a global Var element "ID" in which we will store the participant's ID
