@@ -9,7 +9,7 @@ var shuffleSequence = seq("consent", "IDentry", "intro", "tech",
                         "starter",
  // trials named _dummy_ will be excluded by following:
             //            sepWith("sep", rshuffle(startsWith("break"), startsWith("hit"), startsWith("filler"))),
-                        followEachWith("sep",randomize(anyOf(startsWith("break"),startsWith("hit"), startsWith("filler")))),
+                        followEachWith("sep",randomize(anyOf(startsWith("rc"),startsWith("fill")))),
  // bilingual language profile survey
                         "blp.intro", 
                         "blp.bio",
@@ -53,15 +53,15 @@ var practiceItemTypes = ["practice"];
 var manualSendResults = true;
 
 var defaults = [
-   // "Maze", {redo: true}, //uncomment to try "redo" mode
+    "Maze", {redo: true}, //uncomment to try "redo" mode
 ];
 
 // following is from the A-maze site to make breaks every 15(ish) maze sentences
 // you have to set the write number of total items and number of blocks to start with, and the right condition names, etc.
 // calculate the following numbers to fill in the values below (not including practice trials-
 // for Mandarin hit/break study:
-// total maze sentences a participant will be presented: 64 (25 experiment, 39 filler)
-// sentences per block: 16
+// total maze sentences a participant will be presented: 96
+// sentences per block: 24
 // number of blocks: 4
 
 function modifyRunningOrder(ro) {
@@ -71,21 +71,21 @@ function modifyRunningOrder(ro) {
     for (var i in ro) {
       var item = ro[i];
       // fill in the relevant stimuli condition names on the next line including fillers (all that should be counted for break purposes)
-      if (item[0].type.startsWith("break")|| item[0].type.startsWith("hit") || item[0].type.startsWith("filler")) {
+      if (item[0].type.startsWith("rc")|| item[0].type.startsWith("fill")) {
           item_count++;
           new_ro.push(item);
         // number after percent (remainder) after item_count is how many items between breaks. last number is total-items - 1
-          if (item_count%16===0 & item_count<63){
+          if (item_count%24===0 & item_count<96){
          // value for item_count=== should be total_items - items_per_block (to trigger message that last block is coming up)
          // text says "only 1 set of sentences left"
-              if (item_count===48){
+              if (item_count===72){
                     ro[i].push(new DynamicElement("Message", 
                         { html: "<p>只剩下一组句子了！</p>", transfer: 3000 }));
                 } else {
                 // first number is the total number of blocks. second number is number of items per block
                 // message says "end of block. n blocks left."
                     ro[i].push(new DynamicElement("Message", 
-                        { html: "<p>本组句子结束，还剩"+(4-(Math.floor(item_count/16)))+" 组句子</p>", transfer: 3000 }));
+                        { html: "<p>本组句子结束，还剩"+(4-(Math.floor(item_count/24)))+" 组句子</p>", transfer: 3000 }));
                 }
                 // next message is added for all breaks after the count message
                 ro[i].push(new DynamicElement("Message", 
@@ -99,24 +99,21 @@ function modifyRunningOrder(ro) {
     return new_ro;
   }
   
-
+// experimental stimuli:
 // template items will be pushed into native items = [] with fake PC trial _dummy_ output
-
-// [["practice", 802], "Maze", {s:"Why was the boss smiling during the meeting?",
-// a:"x-x-x card plan chaired filters allow push considerably?"}]
-
 
 Template("stimuli.csv", row => {
     items.push(
         [[row.label, row.item] , "PennController", newTrial(
-            newController("Maze", {s: row.sentence, a: row.alternative})
+            newController("Maze", {s: row.sentence, a: row.alternative, redo: true})
               .print()
               .log()
               .wait()
         )
         .log("counter", __counter_value_from_server__)
         .log("label", row.label)
-        .log("latinitem", row.item)
+        .log("item", row.ItemId)
+        .log("list", row.group)
         ]
     );
     return newTrial('_dummy_',null);
@@ -130,11 +127,11 @@ var items = [
 
 	["sep", "MazeSeparator", {normalMessage: "正确! 请按任意键继续", errorMessage: "错误！请按任意键继续"}],
 
-["consent", "Form", { html: { include: "consent.html" } } ],
+    ["consent", "Form", { html: { include: "consent.html" } } ],
 
-["intro", "Form", { html: { include: "intro1.html" } } ],
+    ["intro", "Form", { html: { include: "intro1.html" } } ],
 
-["tech", "Form", { html: { include: "tech.html" } } ],
+    ["tech", "Form", { html: { include: "tech.html" } } ],
 
 // ["begin", "PennController",
 //         newTrial(
@@ -151,18 +148,18 @@ var items = [
 //         .log("partID", getVar("partID"))
 // ],
 
-["startpractice", Message, {consentRequired: false,
-	html: ["div",
-		   ["p", "您可以先做三组练习"]
-		  ]}],
+    ["startpractice", Message, {consentRequired: false,
+        html: ["div",
+            ["p", "您可以先做三组练习"]
+            ]}],
 
 //
 //  practice items
 //
 
-[["practice", 801], "Maze", {s:"老板的 手机 在会议中 响了", a:"x-x-x 咱们 氢氧化钠 狐狸"}],
-[["practice", 802], "Maze", {s:"爸爸 边看 电视 边讲 电话", a:"x-x-x 气孔 避免 腐朽 抓住"}],
-[["practice", 803], "Maze", {s:"运动员 在健身房 做了 重量 训练", a:"x-x-x 莎士比亚 螳螂 愤怒 爸爸"}],
+    [["practice", 801], "Maze", {s:"老板的 手机 在会议中 响了", a:"x-x-x 咱们 氢氧化钠 狐狸"}],
+    [["practice", 802], "Maze", {s:"爸爸 边看 电视 边讲 电话", a:"x-x-x 气孔 避免 腐朽 抓住"}],
+    [["practice", 803], "Maze", {s:"运动员 在健身房 做了 重量 训练", a:"x-x-x 莎士比亚 螳螂 愤怒 爸爸"}],
 
    // message that the experiment is beginning
 
@@ -171,27 +168,10 @@ var items = [
 		   ["p", "点此开始主实验"]
 		  ]}],
 
-// experimental stimuli:
 
-//    [Template("stimuli.csv", row =>
-//        newTrial(
-//            [row.label, row.item], "PennController", 
-//            newController("Maze", 
-//                {s:row.sentence, 
-//                a:row.alternative}
-//                )
-//                .log()
-//                .print()
-//                .wait()
-//            )
-//            .log("logthis", "blah")
-//            .log("counter", __counter_value_from_server__)
-//            .log("itemlog", row.item)
-//            )
-//        ],
 // completion: 
 
-["completion", "Form", {continueMessage: null, html: { include: "completion.html" } } ]
+    ["completion", "Form", {continueMessage: null, html: { include: "completion.html" } } ]
 
 // leave this bracket - it closes the items section
 ];
@@ -719,5 +699,4 @@ Template(GetTable( "blp.csv")
     .log( "Subject", getVar("partID")) 
 )
 
-
-// prolific page URL: https://app.prolific.co/submissions/complete?cc=1F43E610
+// prolific page URL: 
