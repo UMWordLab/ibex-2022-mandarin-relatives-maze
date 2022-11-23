@@ -1,4 +1,4 @@
-label,type,Experiment,ItemId,Question,Condition,Correct_Answer,Question_type,group,sentence,Phrase1,Phrase2,Phrase3,Phrase4,Phrase5,Phrase6,Phrase7,Phrase8,Phrase9,Phrase10,Phrase11,Phrase12,Phrase13,Phrase14,alternative
+label,type,Experiment,item,Question,Condition,Correct_Answer,Question_type,group,sentence,Phrase1,Phrase2,Phrase3,Phrase4,Phrase5,Phrase6,Phrase7,Phrase8,Phrase9,Phrase10,Phrase11,Phrase12,Phrase13,Phrase14,alternative
 rc_a_1,rc,RCs_SPR_ET,1,那个顾客听说过老板吗?,a,1,1,list1,那个 昨晚 揍了 服务生 一顿 的 顾客 听说过 老板 并且 记得 他。,那个,昨晚,揍了,服务生,一顿,的,顾客,听说过,老板,并且,记得,他。,,,X-X-X 毁灭 眉毛 交响曲 憧憬 种 繁荣 葡萄牙 塑料 矛盾 辐射 种。
 rc_b_1,rc,RCs_SPR_ET,1,那个顾客听说过老板吗？,b,1,1,list2,那个 昨晚 服务生 揍了 一顿 的 顾客 听说过 老板 并且 记得 他。,那个,昨晚,服务生,揍了,一顿,的,顾客,听说过,老板,并且,记得,他。,,,X-X-X 毁灭 眉毛 交响曲 憧憬 种 繁荣 葡萄牙 塑料 矛盾 辐射 种。
 rc_c_1,rc,RCs_SPR_ET,1,那个顾客听说过老板吗？,c,2,1,list3,老板 听说过 那个 昨晚 揍了 服务生 一顿 的 顾客 并且 通知了 记者。,老板,听说过,那个,昨晚,揍了,服务生,一顿,的,顾客,并且,通知了,记者。,,,X-X-X 芭蕾舞 矛盾 毁灭 摹仿 纯收入 荒芜 种 繁荣 阶段 叶倩倩 溶液。

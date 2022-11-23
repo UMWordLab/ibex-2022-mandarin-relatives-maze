@@ -112,7 +112,7 @@ Template("stimuli.csv", row => {
         )
         .log("counter", __counter_value_from_server__)
         .log("label", row.label)
-        .log("item", row.ItemId)
+        .log("item", row.item)
         .log("list", row.group)
         ]
     );
