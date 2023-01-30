@@ -69,7 +69,7 @@ var practiceItemTypes = ["practice"];
 var manualSendResults = true;
 
 var defaults = [
-    "Maze", {redo: true, time:1000, emess: "答案错误，请确认您选择最佳的词语延续句子"}, //uncomment to try "redo" mode
+    "Maze", {redo: true, time:1000, emess: "答案错误，rmess: "请确认您选择最佳的词语延续句子"}, //uncomment to try "redo" mode
 ];
 
 // following is from the A-maze site to make breaks every 15(ish) maze sentences
@@ -206,7 +206,7 @@ PennController("closing",
 Template("stimuli.csv", row => {
     items.push(
         [[row.label, row.item] , "PennController", newTrial(
-            newController("Maze", {s: row.sentence, a: row.alternative, redo: true, time:1000, emess: "答案错误，请确认您选择最佳的词语延续句子"})
+            newController("Maze", {s: row.sentence, a: row.alternative, redo: true, time:1000, emess: "答案错误"，rmess: "请确认您选择最佳的词语延续句子"})
               .print()
               .log()
               .wait()
